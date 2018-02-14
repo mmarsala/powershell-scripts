@@ -4,4 +4,4 @@ A growing repository of simple PowerShell scripts to use in various networking a
 
 ## Examples
 GetLocalGroupsAndUsers.ps1 - A script to retrieve local users and groups from a remote file server
-    Usage: .\GetLocalGroupsAndUsers.ps1 -fileserver <NAME, IP, or FQDN OF FILE SERVER>
+  Usage: .\GetLocalGroupsAndUsers.ps1 -fileserver <NAME, IP, or FQDN OF FILE SERVER>
