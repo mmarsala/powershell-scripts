@@ -7,3 +7,6 @@ A growing repository of simple PowerShell scripts to use in various networking a
 ```
 .\GetLocalGroupsAndUsers.ps1 -fileserver <NAME, IP, or FQDN OF FILE SERVER>
 ```
+
+## Disclaimer
+This repository does not represent an official repository for Peer Software or Microsoft. All code and information in this repository is provided as is.
