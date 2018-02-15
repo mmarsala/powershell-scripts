@@ -1,4 +1,5 @@
-﻿# Script to get detailed file and folder info from a path. If the path points to a folder, info for all immediate children will also be reported
+﻿# Script to get detailed file and folder info for a path. Information includes reparse and stream details.
+# If the path points to a folder, information for all immediate children will also be reported.
 #
 # Requirements: This script must be run under an account with local admin rights on the remote file server.
 #
@@ -36,7 +37,6 @@ if ($item.PsIsContainer) {
     Write-Host "=====Root Directory [$path]====="
 
     # If root path is a folder, grab info about the folder and dump it to the console (including list of root streams from above)
-
     $folderDetails = @{"RootDirectory"=$path; "StreamInfo"=$streamObjs; "Size"=$item.Length; "Attributes"=$item.Attributes;  `
          "Target"=$item.Target; "LinkType"=$item.LinkType; "Mode"=$item.Mode;  `
          "LastModTime"=$item.LastWriteTime; "LastAccessedTime"=$item.LastAccessTime; "CreateTime"=$item.CreationTime};
@@ -46,16 +46,19 @@ if ($item.PsIsContainer) {
     $folderDetailsObj|fl -Property "RootDirectory", "Size", "Attributes", "LinkType", "Target", "Mode", "LastModTime", "LastAccessedTime", "CreateTime", "StreamInfo"
 
     # Check for link information and if it exists, use fsutil to get more in-depth information on the reparse
+    # TODO figure out a better way to format the output of fsutil. For now, just dump its raw text to the console.
     $linkType = $item.LinkType
     if (![string]::IsNullOrEmpty($linkType)) {
         Write-Host "==========Detailed Reparse Info for Root Directory [$path]=========="
         &$fsutil reparsepoint query $path
     }
 
+    # Extra spacing to make it easier to match fsutil output with root
+    Write-Host ""
+    Write-Host ""
+    
     # Then iterate through all direct children
     $children = Get-ChildItem -path $path
-
-    Write-Host ""
 
     foreach ($child in $children) {
 
@@ -84,6 +87,7 @@ if ($item.PsIsContainer) {
             $childFolderDetailsObj|fl -Property "ChildDirectory", "Size", "Attributes", "LinkType", "Target", "Mode", "LastModTime","LastAccessedTime", "CreateTime", "StreamInfo"
 
             # Check for link information and if it exists, use fsutil to get more in-depth information on the reparse
+            # TODO figure out a better way to format the output of fsutil. For now, just dump its raw text to the console.
             $linkType = $child.LinkType
             if (![string]::IsNullOrEmpty($linkType)) {
                 Write-Host "==========Detailed Reparse Info for Child Directrory [$childPath]=========="
@@ -103,6 +107,7 @@ if ($item.PsIsContainer) {
             $childFileDetailsObj|fl -Property "ChildFile", "Size", "Attributes", "Extension", "VersionInfo", "LinkType", "Target", "Mode", "LastModTime", "LastAccessedTime", "CreateTime",  "StreamInfo"
 
             # Check for link information and if it exists, use fsutil to get more in-depth information on the reparse
+            # TODO figure out a better way to format the output of fsutil. For now, just dump its raw text to the console.
             $linkType = $child.LinkType
             if (![string]::IsNullOrEmpty($linkType)) {
                 Write-Host "==========Detailed Reparse Info for Child File [$childPath]=========="
@@ -110,6 +115,8 @@ if ($item.PsIsContainer) {
             }
         }
 
+        # Extra spacing to make it easier to match fsutil output with a child
+        Write-Host ""
         Write-Host ""
     }
 
