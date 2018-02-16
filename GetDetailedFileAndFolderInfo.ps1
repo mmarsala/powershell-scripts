@@ -45,15 +45,14 @@ if ($item.PsIsContainer) {
 
     $folderDetailsObj|fl -Property "RootDirectory", "Size", "Attributes", "LinkType", "Target", "Mode", "LastModTime", "LastAccessedTime", "CreateTime", "StreamInfo"
 
-    # Check for link information and if it exists, use fsutil to get more in-depth information on the reparse
+    # Use fsutil to get more in-depth information on any potential reparse
     # TODO figure out a better way to format the output of fsutil. For now, just dump its raw text to the console.
-    $linkType = $item.LinkType
-    if (![string]::IsNullOrEmpty($linkType)) {
-        Write-Host "==========Detailed Reparse Info for Root Directory [$path]=========="
-        &$fsutil reparsepoint query $path
-    }
+    Write-Host "==========Detailed Reparse Info for Root Directory [$path]=========="
+    &$fsutil reparsepoint query $path
 
     # Extra spacing to make it easier to match fsutil output with root
+    Write-Host ""
+    Write-Host ""
     Write-Host ""
     Write-Host ""
     
@@ -86,13 +85,10 @@ if ($item.PsIsContainer) {
 
             $childFolderDetailsObj|fl -Property "ChildDirectory", "Size", "Attributes", "LinkType", "Target", "Mode", "LastModTime","LastAccessedTime", "CreateTime", "StreamInfo"
 
-            # Check for link information and if it exists, use fsutil to get more in-depth information on the reparse
+            # Use fsutil to get more in-depth information on any potential reparse
             # TODO figure out a better way to format the output of fsutil. For now, just dump its raw text to the console.
-            $linkType = $child.LinkType
-            if (![string]::IsNullOrEmpty($linkType)) {
-                Write-Host "==========Detailed Reparse Info for Child Directrory [$childPath]=========="
-                &$fsutil reparsepoint query $childPath
-            }
+            Write-Host "==========Detailed Reparse Info for Child Directrory [$childPath]=========="
+            &$fsutil reparsepoint query $childPath
 
         } else {
             Write-Host "=====Child File [$childPath]====="
@@ -106,18 +102,18 @@ if ($item.PsIsContainer) {
 
             $childFileDetailsObj|fl -Property "ChildFile", "Size", "Attributes", "Extension", "VersionInfo", "LinkType", "Target", "Mode", "LastModTime", "LastAccessedTime", "CreateTime",  "StreamInfo"
 
-            # Check for link information and if it exists, use fsutil to get more in-depth information on the reparse
+            # Use fsutil to get more in-depth information on any potential reparse
             # TODO figure out a better way to format the output of fsutil. For now, just dump its raw text to the console.
-            $linkType = $child.LinkType
-            if (![string]::IsNullOrEmpty($linkType)) {
-                Write-Host "==========Detailed Reparse Info for Child File [$childPath]=========="
-                &$fsutil reparsepoint query $childPath
-            }
+            Write-Host "==========Detailed Reparse Info for Child File [$childPath]=========="
+            &$fsutil reparsepoint query $childPath
         }
 
         # Extra spacing to make it easier to match fsutil output with a child
         Write-Host ""
         Write-Host ""
+        Write-Host ""
+        Write-Host ""
+
     }
 
 } else {
@@ -133,10 +129,8 @@ if ($item.PsIsContainer) {
 
     $fileDetailsObj|fl -Property "Path", "Size", "Attributes","Extension", "VersionInfo", "LinkType", "Target", "Mode", "LastModTime","LastAccessedTime", "CreateTime", "StreamInfo"
 
-    # Check for link information and if it exists, use fsutil to get more in-depth information on the reparse
-    $linkType = $item.LinkType
-    if (![string]::IsNullOrEmpty($linkType)) {
-        Write-Host "=====Detailed Reparse Info for Root File [$path]====="
-        &$fsutil reparsepoint query $path
-    }
+    # Use fsutil to get more in-depth information on any potential reparse
+    # TODO figure out a better way to format the output of fsutil. For now, just dump its raw text to the console.
+    Write-Host "=====Detailed Reparse Info for Root File [$path]====="
+    &$fsutil reparsepoint query $path
 }
