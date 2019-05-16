@@ -12,7 +12,11 @@ A growing repository of simple PowerShell scripts to use in various networking a
 ```
 .\GetDetailedFileAndFolderInfo.ps1 -path <LOCAL OR REMOTE PATH TO A FILE OR FOLDER>
 ```
-
+-------------------------
+`PeerOpenFileDiag.ps1` - A script to retrieve detailed processor and memory information as well as the entire open file list from a remote file server.
+```
+.\PeerOpenFileDiag.ps1 -RemoteSystemName <NAME OR IP ADDRESS OF FILE SERVER> -LogFile <PATH TO LOG FILE TO WHICH THE SCRIPT WILL APPEND>
+```
 
 ## Disclaimer
 This repository does not represent an official repository for Peer Software or Microsoft. All code and information in this repository is provided as is.
