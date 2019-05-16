@@ -1,4 +1,15 @@
-﻿param
+﻿# A script to retrieve detailed processor and memory information as well as the entire open file list from a remote file server.
+#
+# Requirements: This script must be run under an account with local admin rights on the remote file server.
+#
+# 
+# Usage:
+# .\PeerOpenFileDiag.ps1 -RemoteSystemName <NAME OR IP ADDRESS OF FILE SERVER> -LogFile <PATH TO LOG FILE TO WHICH THE SCRIPT WILL APPEND>
+#
+# Version: 002
+# Author: Matt Marsala
+
+param
 (
     [Parameter(Mandatory = $true)]
     [String]
@@ -13,7 +24,7 @@
 "====================================================================================" | Out-File $LogFile -Append
 "" | Out-File $LogFile -Append
 
-"Peer Software Open File Diagnostics Script v002" | Out-File $LogFile -Append
+"Open File Diagnostics Script v002" | Out-File $LogFile -Append
 
 "PowerShell Version is " + $PSVersionTable.PSVersion | Out-File $LogFile -Append
 
